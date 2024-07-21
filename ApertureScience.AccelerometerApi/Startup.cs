@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ApertureScience.AccelerometerApi.Data;
 using Microsoft.AspNetCore.Identity;
+using ApertureScience.AccelerometerApi.Services;
 
 public class Startup
 {
@@ -19,12 +20,14 @@ public class Startup
         services.AddIdentity<IdentityUser, IdentityRole>()
                .AddEntityFrameworkStores<ApplicationDbContext>()
                .AddDefaultTokenProviders();
-
+        services.AddScoped<ActivationCodeService>();
         services.AddControllers();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
+
+
         if (env.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
