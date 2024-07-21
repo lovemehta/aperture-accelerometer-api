@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using ApertureScience.AccelerometerApi.Data;
 using Microsoft.AspNetCore.Identity;
 using ApertureScience.AccelerometerApi.Services;
+using Microsoft.OpenApi.Models;
 
 public class Startup
 {
@@ -22,6 +23,12 @@ public class Startup
                .AddDefaultTokenProviders();
         services.AddScoped<ActivationCodeService>();
         services.AddControllers();
+
+        // Register the Swagger generator, defining 1 or more Swagger documents
+        services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "ApertureScience Accelerometer API", Version = "v1" });
+        });
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -37,6 +44,14 @@ public class Startup
         app.UseRouting();
         app.UseAuthentication();
         app.UseAuthorization();
+
+        app.UseSwagger();
+        app.UseSwaggerUI(c =>
+        {
+            c.SwaggerEndpoint("/swagger/v1/swagger.json", "ApertureScience Accelerometer API v1");
+            c.RoutePrefix = string.Empty; // Set Swagger UI at the app's root
+        });
+
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();
