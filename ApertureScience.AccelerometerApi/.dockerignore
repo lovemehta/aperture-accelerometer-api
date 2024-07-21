@@ -1,0 +1,12 @@
+**/.classpath
+**/.dockerignore
+**/.git
+**/.gitignore
+**/.project
+**/.settings
+**/.toolstarget
+**/*.md
+**/*.ts
+**/*.ts.map
+**/Dockerfile*
+**/README.md
