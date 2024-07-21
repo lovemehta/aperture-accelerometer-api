@@ -1,0 +1,6 @@
+@ApertureScience.AccelerometerApi_HostAddress = http://localhost:5076
+
+GET {{ApertureScience.AccelerometerApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
