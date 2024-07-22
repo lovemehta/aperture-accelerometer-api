@@ -38,6 +38,7 @@ public class Startup
 
         services.AddScoped<IActivationCodeService, ActivationCodeService>();
         services.AddScoped<IJwtTokenService, JwtTokenService>();
+        services.AddScoped<IProfileService, ProfileService>();
 
         services.AddControllers();
 
