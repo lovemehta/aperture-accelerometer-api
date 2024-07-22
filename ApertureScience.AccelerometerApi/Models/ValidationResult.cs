@@ -15,7 +15,7 @@ namespace ApertureScience.AccelerometerApi.Models
         /// <summary>
         /// Gets or sets the token generated during the validation, if applicable.
         /// </summary>
-        public string Token { get; set; }
+        public string? Token { get; set; }
 
         /// <summary>
         /// Gets or sets a dictionary of errors encountered during the validation.

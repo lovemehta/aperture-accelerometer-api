@@ -17,7 +17,7 @@ namespace ApertureScience.AccelerometerApi.Models
         /// Gets or sets the activation code string.
         /// </summary>
         [Required]
-        public string Code { get; set; }
+        public required string Code { get; set; }
 
         /// <summary>
         /// Gets or sets the date and time when the activation code was created.

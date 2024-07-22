@@ -45,11 +45,11 @@ namespace ApertureScience.AccelerometerApi.Models
         /// Gets or sets the user ID associated with the measurement.
         /// </summary>
         [Required]
-        public string UserId { get; set; }
+        public required string UserId { get; set; }
 
         /// <summary>
         /// Gets or sets the user associated with the measurement.
         /// </summary>
-        public IdentityUser User { get; set; }
+        public IdentityUser? User { get; set; }  // Making this property nullable to avoid the warning
     }
 }

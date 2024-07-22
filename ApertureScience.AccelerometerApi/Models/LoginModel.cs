@@ -12,13 +12,13 @@ namespace ApertureScience.AccelerometerApi.Models
         /// </summary>
         [Required]
         [EmailAddress]
-        public string Email { get; set; }
+        public required string Email { get; set; }
 
         /// <summary>
         /// Gets or sets the user's password.
         /// </summary>
         [Required]
         [MinLength(8, ErrorMessage = "Password must be at least 8 characters long.")]
-        public string Password { get; set; }
+        public required string Password { get; set; }
     }
 }

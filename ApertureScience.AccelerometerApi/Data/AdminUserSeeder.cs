@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Threading.Tasks;
 
@@ -21,9 +22,15 @@ namespace ApertureScience.AccelerometerApi.Configuration
                 var scopedProvider = scope.ServiceProvider;
                 var userManager = scopedProvider.GetRequiredService<UserManager<IdentityUser>>();
                 var roleManager = scopedProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                var configuration = scopedProvider.GetRequiredService<IConfiguration>();
 
-                string adminEmail = "admin@example.com";
-                string adminPassword = "Admin@123456";
+                string? adminEmail = configuration["AdminUser:Email"];
+                string? adminPassword = configuration["AdminUser:Password"];
+
+                if (string.IsNullOrEmpty(adminEmail) || string.IsNullOrEmpty(adminPassword))
+                {
+                    throw new InvalidOperationException("Admin user email or password is not configured properly.");
+                }
 
                 if (!await roleManager.RoleExistsAsync("Administrator"))
                 {

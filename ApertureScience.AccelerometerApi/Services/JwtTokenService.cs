@@ -22,7 +22,7 @@ namespace ApertureScience.AccelerometerApi.Services
         /// <param name="configuration">The application configuration.</param>
         public JwtTokenService(IConfiguration configuration)
         {
-            _jwtConfig = configuration.GetSection("Jwt").Get<JwtConfig>();
+            _jwtConfig = configuration.GetSection("Jwt").Get<JwtConfig>() ?? throw new ArgumentNullException(nameof(configuration), "JWT configuration is missing");
         }
 
         /// <summary>
@@ -33,14 +33,18 @@ namespace ApertureScience.AccelerometerApi.Services
         /// <returns>A JWT token string.</returns>
         public string GenerateToken(IdentityUser user, string role)
         {
+            if (user == null) throw new ArgumentNullException(nameof(user));
+            if (string.IsNullOrEmpty(role)) throw new ArgumentNullException(nameof(role));
+
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_jwtConfig.Key);
+            var key = Encoding.ASCII.GetBytes(_jwtConfig.Key ?? throw new InvalidOperationException("JWT key is not configured"));
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(JwtRegisteredClaimNames.Sub, user.Id),
-                    new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                    new Claim(JwtRegisteredClaimNames.Sub, user.Id ?? throw new InvalidOperationException("User ID is null")),
+                    new Claim(JwtRegisteredClaimNames.Email, user.Email ?? throw new InvalidOperationException("User email is null")),
                     new Claim(ClaimTypes.Role, role)
                 }),
                 Expires = DateTime.UtcNow.AddDays(365), // Set an appropriate expiration time
@@ -48,6 +52,7 @@ namespace ApertureScience.AccelerometerApi.Services
                 Audience = _jwtConfig.Audience,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
+
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }

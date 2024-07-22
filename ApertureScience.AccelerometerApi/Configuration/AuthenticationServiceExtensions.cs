@@ -23,8 +23,8 @@ namespace ApertureScience.AccelerometerApi.Configuration
             var jwtConfigSection = configuration.GetSection("Jwt");
             services.Configure<JwtConfig>(jwtConfigSection);
 
-            var jwtConfig = jwtConfigSection.Get<JwtConfig>();
-            var key = Encoding.ASCII.GetBytes(jwtConfig.Key);
+            var jwtConfig = jwtConfigSection.Get<JwtConfig>() ?? throw new InvalidOperationException("JWT configuration is missing in appsettings.json");
+            var key = Encoding.ASCII.GetBytes(jwtConfig.Key ?? throw new InvalidOperationException("JWT key is missing in the configuration"));
 
             services.AddAuthentication(x =>
             {
@@ -41,8 +41,8 @@ namespace ApertureScience.AccelerometerApi.Configuration
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = jwtConfig.Issuer,
-                    ValidAudience = jwtConfig.Audience,
+                    ValidIssuer = jwtConfig.Issuer ?? throw new InvalidOperationException("JWT issuer is missing in the configuration"),
+                    ValidAudience = jwtConfig.Audience ?? throw new InvalidOperationException("JWT audience is missing in the configuration"),
                     IssuerSigningKey = new SymmetricSecurityKey(key)
                 };
             });
