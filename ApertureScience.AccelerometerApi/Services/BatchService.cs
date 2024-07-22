@@ -43,7 +43,7 @@ namespace ApertureScience.AccelerometerApi.Services
             });
 
             // Create batches of measurement entities
-            var batches = _batchProcessor.CreateBatches(entities, 1000);
+            var batches = _batchProcessor.CreateBatches(entities);
 
             // Consume each batch asynchronously
             foreach (var batch in batches)
