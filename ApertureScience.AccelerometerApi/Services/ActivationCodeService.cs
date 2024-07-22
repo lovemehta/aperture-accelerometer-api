@@ -1,10 +1,12 @@
 using ApertureScience.AccelerometerApi.Data;
 using ApertureScience.AccelerometerApi.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Threading.Tasks;
 
 namespace ApertureScience.AccelerometerApi.Services
 {
-    public class ActivationCodeService
+    public class ActivationCodeService : IActivationCodeService
     {
         private readonly ApplicationDbContext _context;
 
@@ -26,6 +28,5 @@ namespace ApertureScience.AccelerometerApi.Services
             await _context.SaveChangesAsync();
             return code;
         }
-
     }
 }

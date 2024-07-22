@@ -10,9 +10,9 @@ namespace ApertureScience.AccelerometerApi.Controllers
     [Authorize(Roles = "Administrator")]
     public class ActivationCodesController : ControllerBase
     {
-        private readonly ActivationCodeService _activationCodeService;
+        private readonly IActivationCodeService _activationCodeService;
 
-        public ActivationCodesController(ActivationCodeService activationCodeService)
+        public ActivationCodesController(IActivationCodeService activationCodeService)
         {
             _activationCodeService = activationCodeService;
         }
