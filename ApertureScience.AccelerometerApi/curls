@@ -2,25 +2,23 @@ curl -v -X POST "http://localhost:5076/api/Auth/token" \
 -H "Content-Type: application/json" \
 -d '{"email": "admin@example.com", "password": "Admin@123456"}'
 
-
 curl -v -X POST "http://localhost:5076/api/ActivationCodes" \
 -H "Content-Type: application/json" \
 -H "Authorization: Bearer <admin_token>"
 
-
 curl -v -X POST "http://localhost:5076/api/Profile/create" \
 -H "Content-Type: application/json" \
 -d '{
-    "email": "testsubject@example.com",
-    "password": "Test@123456",
-    "fullName": "Test Subject",
-    "activationCode": "123456"
+"email": "testsubject@example.com",
+"password": "Test@123456",
+"fullName": "Test Subject",
+"activationCode": "123456"
 }'
 
 curl -v -X POST "http://localhost:5076/api/Acceleration/ingest" \
 -H "Content-Type: application/json" \
 -H "Authorization: Bearer <test_subject_token>" \
--d '[                                                         
-    {"timestamp": 1625839382000, "x": 123, "y": 456, "z": 789},
-    {"timestamp": 1625839383000, "x": 223, "y": 556, "z": 889}
+-d '[
+ {"timestamp": 1625839382000, "x": 123, "y": 456, "z": 789},
+{"timestamp": 1625839383000, "x": 223, "y": 556, "z": 889}
 ]'
