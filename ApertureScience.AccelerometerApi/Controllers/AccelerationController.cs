@@ -13,12 +13,12 @@ namespace ApertureScience.AccelerometerApi.Controllers
     [Authorize]
     public class AccelerationController : ControllerBase
     {
-        private readonly IAccelerationService _accelerationService;
+        private readonly IBatchService _batchService;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public AccelerationController(IAccelerationService accelerationService, UserManager<IdentityUser> userManager)
+        public AccelerationController(IBatchService batchService, UserManager<IdentityUser> userManager)
         {
-            _accelerationService = accelerationService;
+            _batchService = batchService;
             _userManager = userManager;
         }
 
@@ -28,8 +28,6 @@ namespace ApertureScience.AccelerometerApi.Controllers
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                Console.WriteLine("Came here");
-
                 return Unauthorized();
             }
 
@@ -39,8 +37,8 @@ namespace ApertureScience.AccelerometerApi.Controllers
                 return BadRequest("Measurements cannot be null or empty.");
             }
 
-            // Ingest measurements
-            await _accelerationService.IngestMeasurementsAsync(user.Id, measurements);
+            // Process measurements
+            await _batchService.ProcessMeasurementsAsync(user.Id, measurements);
             return Ok();
         }
     }

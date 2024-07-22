@@ -17,7 +17,6 @@ public class Startup
     }
 
     public IConfiguration Configuration { get; }
-
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddDbContext<ApplicationDbContext>(options =>
@@ -34,6 +33,9 @@ public class Startup
         services.AddScoped<IJwtTokenService, JwtTokenService>();
         services.AddScoped<IProfileService, ProfileService>();
         services.AddScoped<IAccelerationService, AccelerationService>();
+        services.AddScoped<IBatchProcessor, BatchProcessor>();
+        services.AddScoped<IAsyncConsumer, AsyncConsumer>();
+        services.AddScoped<IBatchService, BatchService>();
 
         services.AddControllers();
 
@@ -64,6 +66,7 @@ public class Startup
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "ApertureScience Accelerometer API", Version = "v1" });
         });
     }
+
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
@@ -120,5 +123,5 @@ public class Startup
             }
         }
     }
-
 }
+
