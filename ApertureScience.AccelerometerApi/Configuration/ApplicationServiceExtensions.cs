@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using ApertureScience.AccelerometerApi.Services;
+using ApertureScience.AccelerometerApi.Repositories;
 
 namespace ApertureScience.AccelerometerApi.Configuration
 {
@@ -22,6 +23,8 @@ namespace ApertureScience.AccelerometerApi.Configuration
             services.AddScoped<IBatchProcessor, BatchProcessor>();
             services.AddScoped<IAsyncConsumer, AsyncConsumer>();
             services.AddScoped<IBatchService, BatchService>();
+            services.AddScoped<ITestSubjectRepository, TestSubjectRepository>();
+            services.AddScoped<ITestSubjectService, TestSubjectService>();
 
             return services;
         }
