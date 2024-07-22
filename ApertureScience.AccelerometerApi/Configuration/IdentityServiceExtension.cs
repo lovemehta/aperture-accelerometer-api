@@ -22,7 +22,6 @@ namespace ApertureScience.AccelerometerApi.Configuration
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
-                options.EnableSensitiveDataLogging();
             });
 
             services.AddIdentity<IdentityUser, IdentityRole>()
