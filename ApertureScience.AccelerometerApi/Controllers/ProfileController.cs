@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using ApertureScience.AccelerometerApi.Services;
 using ApertureScience.AccelerometerApi.Models;
+using ApertureScience.AccelerometerApi.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ApertureScience.AccelerometerApi.Controllers
 {
@@ -17,14 +17,15 @@ namespace ApertureScience.AccelerometerApi.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> CreateProfile([FromBody] ProfileModel model)
+        public async Task<IActionResult> Create([FromBody] ProfileModel model)
         {
             var result = await _profileService.CreateProfileAsync(model);
-            if (result.Success)
+            if (!result.Success)
             {
-                return Ok(new { token = result.Token });
+                return BadRequest(result.Errors);
             }
-            return BadRequest(result.Errors);
+
+            return Ok(new { token = result.Token });
         }
     }
 }

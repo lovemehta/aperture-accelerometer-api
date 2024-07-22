@@ -75,7 +75,7 @@ namespace ApertureScience.AccelerometerApi.Services
             // Assign TestSubject role to the user
             await _userManager.AddToRoleAsync(user, "TestSubject");
 
-            // Generate Token
+            // Authenticate and generate token
             result.Token = _jwtTokenService.GenerateToken(user, "TestSubject");
             result.Success = true;
 
